@@ -85,3 +85,40 @@ Each Build is one sprint. The "Build" column says which build finishes the story
 2. It is reachable the way a user would reach it (API, and screen where it applies).
 3. The AI log has an entry for anything the AI got wrong.
 4. It is merged through a pull request.
+
+
+## Build 2: Search, filter and sort
+
+### Story: Search events
+As an attendee, I want to search events by name or city so that I can find events I care about.
+
+Acceptance criteria:
+- Searching "live" finds "Lagos Live", whatever the letter case.
+- A search with no matches returns an empty list, not an error.
+- The original list of events is never changed.
+
+### Story: Filter events
+As an attendee, I want to filter events by date range and price so that I only see events I can attend and afford.
+
+Acceptance criteria:
+- Events on the first and last day of the range are included.
+- The price of an event is the price of its cheapest tier.
+- Events with no date are hidden when a date range is used.
+- An invalid date gives a clear error.
+
+### Story: Sort events
+As an attendee, I want to sort events by date, price or availability so that I can compare them.
+
+Acceptance criteria:
+- Sorting works in ascending and descending order.
+- Events with equal values keep their original order (the sort is stable).
+- Events with no date are listed last when sorting by date.
+- The original list is never changed.
+
+### Story: Reject bad event details
+As an organizer, I want invalid event details rejected so that bad data never reaches attendees.
+
+Acceptance criteria:
+- An empty city gives a clear error.
+- A date that is not a real date gives a clear error.
+- Events can still be created without a city or date.
