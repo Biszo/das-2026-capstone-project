@@ -6,12 +6,20 @@ function requireWholeNumber(value, label, minimum) {
   }
 }
 
-function createEvent(name, tiers) {
+function createEvent(name, tiers, details = {}) {
   if (typeof name !== 'string' || name.trim() === '') {
     throw new TypeError('Event name must be a non-empty string.');
   }
   if (!Array.isArray(tiers) || tiers.length === 0) {
     throw new TypeError('An event must have at least one ticket tier.');
+  }
+
+  const { city = null, date = null } = details;
+  if (city !== null && (typeof city !== 'string' || city.trim() === '')) {
+    throw new TypeError('Event city must be a non-empty string.');
+  }
+  if (date !== null && (typeof date !== 'string' || Number.isNaN(Date.parse(date)))) {
+    throw new TypeError('Event date must be a valid date string such as 2026-12-20.');
   }
 
   const tierNames = new Set();
@@ -34,7 +42,12 @@ function createEvent(name, tiers) {
     };
   });
 
-  return { name: name.trim(), tiers: eventTiers };
+  return {
+    name: name.trim(),
+    city: city === null ? null : city.trim(),
+    date,
+    tiers: eventTiers,
+  };
 }
 
 module.exports = { createEvent };
