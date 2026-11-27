@@ -67,3 +67,8 @@ test('sorting never changes the original list', () => {
 test('an unknown sort key throws', () => {
     assert.throws(() => sortEvents(sampleEvents(), 'colour'), TypeError);
 });
+
+test('events with no date are last even when sorting descending', () => {
+    const events = [createEvent('No date', [{ name: 'A', priceKobo: 1, capacity: 1 }]), ...sampleEvents()];
+    assert.equal(sortEvents(events, 'date', 'desc').at(-1).name, 'No date');
+});

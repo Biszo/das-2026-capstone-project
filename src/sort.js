@@ -58,6 +58,13 @@ function sortEvents(events, key, direction = 'asc') {
     }
     const compare = comparators[key];
     const directed = direction === 'asc' ? compare : (a, b) => compare(b, a);
+
+    if (key === 'date') {
+        // Undated events always go last, in either direction.
+        const dated = events.filter((event) => event.date !== null);
+        const undated = events.filter((event) => event.date === null);
+        return [...mergeSort(dated, directed), ...undated];
+    }
     return mergeSort(events, directed);
 }
 
